@@ -1,0 +1,5 @@
+*.root
+*.o
+*.out
+*.log
+__pycache__/
