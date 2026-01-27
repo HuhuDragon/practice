@@ -1,0 +1,124 @@
+ &PARTITION NAMEP = '7Li     ', MASSP = 7.016, ZP = 3., 
+ NEX = -1, PWF = T, NAMET = '26Mg    ', MASST = 25.9826, 
+ ZT = 12., QVAL = 0., READSTATES = 0, 
+ /
+ &STATES JP = 1.5, COPYP = 0, PTYP = -1, BANDP = -1, EP = 0., 
+ KKP = 0., TP = 0., CPOT = 1, JT = 0., COPYT = 0, PTYT = 1, 
+ BANDT = 1, ET = 0., KKT = 0., TT = 0., FEXCH = F, IGNORE = F, 
+ INFAM = 0, OUTFAM = 0, 
+ /
+ &PARTITION NAMEP = '6He     ', MASSP = 6.0189, ZP = 2., 
+ NEX = 1, PWF = T, NAMET = '27Al    ', MASST = 26.9815, 
+ ZT = 13., QVAL = -1.6767, READSTATES = 0, 
+ /
+ &STATES JP = 0., COPYP = 0, PTYP = 1, BANDP = 1, EP = 0., 
+ KKP = 0., TP = 0., CPOT = 2, JT = 1.5, COPYT = 0, PTYT = 1, 
+ BANDT = 1, ET = 8.324, KKT = 0., TT = 0., FEXCH = F, IGNORE = F, 
+ INFAM = 0, OUTFAM = 0, 
+ /
+ &partition /
+ &POTL KPI = 1, TYPEI = 0, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 26., 0., 1.25, 5*0., LSHAPEI = 0, JL = ' ', XLVARY = 0., 
+ ALVARY = 0., 
+ /
+ &POTL KPI = 1, TYPEI = 1, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 196.79, 1.475, 0.575, 19.8, 1.79, 0.89, 2*0., LSHAPEI = 0, 
+ JL = ' ', XLVARY = 0., ALVARY = 0., 
+ /
+ &POTL KPI = 2, TYPEI = 0, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 27., 0., 1.3, 5*0., LSHAPEI = 0, JL = ' ', XLVARY = 0., 
+ ALVARY = 0., 
+ /
+ &POTL KPI = 2, TYPEI = 1, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 206., 1.21, 0.75, 17.5, 1.85, 0.8, 2*0., LSHAPEI = 0, 
+ JL = ' ', XLVARY = 0., ALVARY = 0., 
+ /
+ &POTL KPI = 3, TYPEI = 0, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 6., 0., 1.25, 5*0., LSHAPEI = 0, JL = ' ', XLVARY = 0., 
+ ALVARY = 0., 
+ /
+ &POTL KPI = 3, TYPEI = 1, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 50., 1.25, 0.65, 5*0., LSHAPEI = 0, JL = ' ', XLVARY = 0., 
+ ALVARY = 0., 
+ /
+ &POTL KPI = 4, TYPEI = 0, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 26., 0., 1.25, 5*0., LSHAPEI = 0, JL = ' ', XLVARY = 0., 
+ ALVARY = 0., 
+ /
+ &POTL KPI = 4, TYPEI = 1, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 50., 1.25, 0.65, 5*0., LSHAPEI = 0, JL = ' ', XLVARY = 0., 
+ ALVARY = 0., 
+ /
+ &POTL KPI = 5, TYPEI = 0, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 26., 0., 1.3, 5*0., LSHAPEI = 0, JL = ' ', XLVARY = 0., 
+ ALVARY = 0., 
+ /
+ &POTL KPI = 5, TYPEI = 1, ITT = F, NOSUB = F, SHAPEI = 0, 
+ P = 0., 206., 1.21, 0.75, 17.5, 1.85, 0.8, 2*0., LSHAPEI = 0, 
+ JL = ' ', XLVARY = 0., ALVARY = 0., 
+ /
+ &potl /
+ &OVERLAP KN1 = 1, KN2 = 1, IC1 = 1, IC2 = 2, IN = 1, KIND = 0, 
+ CH1 = ' ', NN = 1, L = 1, LMAX = 0, SN = 0.5, IA = 0, J = 1.5, 
+ IB = 0, KBPOT = 3, KRPOT = 0, BE = 9.975419, ISC = 1, IPC = 0, 
+ NFL = 0, NAM = 0, AMPL = 0., KEEP = F, DM = 0.9970998764038086, 
+ NK = 0, ER = 0., E = 0., 
+ /
+ &OVERLAP KN1 = 2, KN2 = 2, IC1 = 2, IC2 = 1, IN = 2, KIND = 3, 
+ CH1 = ' ', NN = 1, L = 2, LMAX = 0, SN = 0.5, IA = 0, J = 1.5, 
+ IB = 0, KBPOT = 4, KRPOT = 0, BE = 0.046, ISC = 1, IPC = 3, 
+ NFL = 0, NAM = 0, AMPL = 0., KEEP = F, DM = 0.9989013671875, 
+ NK = 0, ER = 0., E = 0., 
+ /
+ &overlap /
+ &COUPLING ICTO = -2, ICFROM = 1, KIND = 7, IP1 = 0, IP2 = -1, 
+ IP3 = 5, IP4 = -1, IP5 = -1, P1 = 0., P2 = 0., JMAX = 0., 
+ RMAX = 0., KFRAG = 0, KCORE = 0, 
+ /
+ &CFP IN = 1, IB = 1, IA = 1, KN = 1, A = 0.65, KEEP = F, 
+ 
+ /
+ &CFP IN = 2, IB = 1, IA = 1, KN = 2, A = 1., KEEP = F, 
+ 
+ /
+ &cfp /
+ &coupling /
+ 'End of couplings'
+
+
+ parameters:    mxx    mxp  mxpex  maxit maxcpl maxnnu 
+   required:      1      2      3      0      1     36
+
+ parameters:   maxn  mint  maxnln maxnlo    msp  lmax1  mpair
+   required:   1202   1201   1201    121      2     52      1
+
+ parameters:     mloc   mclist   maxqrn
+   required:       10        4        3
+
+
+Search for spectroscopic factor                                                 
+NAMELIST
+ &FRESCO HCM = 0.05, RMATCH = 60., RINTP = 0.05, HNL = 0.05, 
+ RNL = 6., CENTRE = 0., HNN = 0.05, RNN = 0., RMIN = 0., 
+ RSP = 60., RASYM = 0., ACCRCY = 0.0010000000474974513, 
+ SWITCH = 0., AJSWTCH = 0., SINJMAX = 0., PLANE = 0, JTMIN = 0., 
+ JTMAX = 32., ABSEND = -0.1, DRY = F, RELA = ' ', NEARFA = 1, 
+ JUMP = 6*0, JBORD = 7*0., PSET = 0, JSET = 0, KQMAX = 0, 
+ PP = 0, THMIN = -1., THMAX = 30., THINC = 0.2, KOORDS = 0, 
+ CUTL = -1.600000023841858, CUTR = 0., CUTC = 0., COMPLEXBINS = F, 
+ IPS = 0., IT0 = 1, ITER = 1, FATAL = T, IBLOCK = 0, PADE = 0, 
+ PSIREN = F, ISO = ' ', NNU = 36, MAXL = 38, MINL = 0, MTMIN = 6, 
+ EPC = 0.6944444444444444, ERANGE = 0., DK = 0., NOSOL = F, 
+ NRBASES = 0, NRBMIN = 0, PRALPHA = F, PCON = 0, RMATR = 60., 
+ EBETA = 2*0., MEIGS = 0, BUTTLE = 0, WEAK = 0.0010000000474974513, 
+ LLMAX = -1, EXPAND = 1.2000000476837158, 1., 0., 4., 0.4000000059604645, 
+ 2., 5*1., HKTARG = 0.20000000298023224, EIGENS = T, CHANS = 0, 
+ LISTCC = 0, TRENEG = 0, CDETR = 0, SMATS = 0, XSTABL = 1, 
+ NLPL = 0, WAVES = 0, LAMPL = 0, VEFF = 0, KFUS = 0, WDISK = 0, 
+ BPM = 0, MELFIL = 0, CDCC = 0, NFUS = 0, NPARAMETERS = 0, 
+ SMALLCHAN = 0., SMALLCOUP = 0., NUMNODE = 0, SUMFORM = 0, 
+ MAXCOUP = 3*0, OMPFORM = 0, INH = 0, TMP = '                                                                      ', 
+ MASFIL = '/netopt/PHS1IT/lib/m88lrb                                             ', 
+ UNITMASS = 1., FINEC = 137.03599, PEL = 1, EXL = 1, LAB = 1, 
+ LIN = 1, LEX = 1, ELAB = 42., 4*0., NLAB = 4*0, 
+ /

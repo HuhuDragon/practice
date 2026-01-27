@@ -1,0 +1,34 @@
+Search for spectroscopic factor
+NAMELIST
+ &FRESCO hcm=0.05 rmatch=60.0 rintp=0.05 hnl=0.05   
+    rnl=6.0 centre=0.0 rsp=0.0 jtmin=0.0 jtmax=32.0 
+    absend=-0.1 dry=F thmin=-1.0 thmax=30.00 thinc=0.2
+    ips=0.0000 it0=1 iter=1 iblock=0 nnu=36   xstabl=1
+    elab=42/ 
+
+ &PARTITION namep='7Li' massp= 7.0160 zp=3 nex=-1 pwf=T namet='26Mg' masst=25.9826 zt=12 qval=0 /
+ &STATES jp=1.5 ptyp=-1 ep=0.00 cpot=1 jt=0 ptyt=1 et=0.0000 fexch=F  /  
+ &PARTITION namep='6He' massp= 6.0189 zp=2 nex=1 pwf=T namet='27Al' masst=26.9815 zt=13 qval=-1.6767 /            
+ &STATES jp=0.0 ptyp= 1 ep=0.00 cpot=2 jt=1.5 ptyt=1 et=8.324 /     
+ &partition / 
+
+ &pot kp=1 type= 0 p(1:3)= 26.000 0 1.25 /
+ &pot kp=1 type= 1 p(1:6)=196.79 1.475 0.575 19.8 1.79 0.89 /
+ &pot kp=2 type= 0 p(1:3)= 27.000 0.00 1.3 /
+ &pot kp=2 type= 1  p(1:6)=206 1.21 0.75 17.5 1.85 0.8/
+ &pot kp=3 type= 0 p(1:3)= 6.000 0.00 1.25 /
+ &pot kp=3 type=1 p(1:3)= 50.0 1.25 0.65 /
+ &pot kp=4 type= 0 p(1:3)= 26.000 0.00 1.25 / 
+ &pot kp=4 type=1 p(1:3)= 50.0 1.25 0.65 /
+ &pot kp=5 type= 0 p(1:3)= 26.000 0.00 1.3 /  
+ &pot kp=5 type= 1  p(1:6)=206 1.21 0.75 17.5 1.85 0.8  /
+ &pot /                         
+ 
+ &OVERLAP kn1=1  ic1=1 ic2=2 in=1 nn=1 l=1 sn=0.5 j=1.5 kbpot=3 be=9.975419 kbpot= 3 isc=1 ipc=0 / 
+ &OVERLAP kn1= 2 ic1=2 ic2=1 in= 2 kind=3 ch1=' ' nn= 1 l=2 sn= 0.5  j= 1.5 kbpot= 4  be=0.046 isc=1 ipc=3  /
+ &overlap /                                                        
+                                
+ &COUPLING icto=-2 icfrom=1 kind=7 ip1=0 ip2=-1 ip3=5 / 
+ &CFP in=1 ib=1  ia=1 kn=1 a=0.65  / 
+ &CFP in=2 ib=1  ia=1 kn=2 a=1.0  /
+ &cfp /    
