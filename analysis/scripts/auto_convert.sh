@@ -59,9 +59,9 @@ ${MIN}
 EOF
 
 if [ $? -ne 0 ]; then
-    echo "❌ DataAna 运行失败"
+    echo " DataAna 运行失败"
     exit 1
 fi
 
 echo
-echo "✅ 所有转换流程结束"
+echo " 所有转换流程结束"
