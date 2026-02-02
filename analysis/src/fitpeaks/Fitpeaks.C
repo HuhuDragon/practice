@@ -29,14 +29,14 @@ TF1* BuildMultiPeakFunc(
 }
 
 
-void FitMultiPeak(
+void Fitpeaks(
     TString dataDir      = "../../data/cal",
     TString filePattern  = "run*_cal.root",
     TString branch       = "sumInner",
     double fitMin        = 500,
     double fitMax        = 1500,
-    std::vector<double> peakGuess = {662, 1173, 1332},
-    int bins             = 4000
+    std::vector<double> peakGuess = {662, 1173, 1332},        // 预期峰位（拟合哪几个）
+    int bins             = 4000                               // 注意bin不要太多或太少
 ) {
 
     TChain chain("ana");
@@ -67,7 +67,7 @@ void FitMultiPeak(
         f->SetParameter(p + 1, peakGuess[i]);    // mean
         f->SetParameter(p + 2, 3.0);              // sigma
 
-        f->SetParLimits(p + 2, 0.5, 20.0);         // sigma 合理限制
+        f->SetParLimits(p + 2, 0.5, 100.0);         // sigma 限制
     }
 
     // 本底初值
