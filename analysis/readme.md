@@ -1,3 +1,4 @@
+git clone git@github.com:HuhuDragon/practice.git
 How to reproduce:
 1. 原始数据放在data/raw
 2. 转数据程序src/convert/，先进decoderV2.1 make生成可执行文件（可以先make clean），执行按提示输入文件名，runnumber，max，min。再进Data_Ana同理先make再执行，最终刻度后数据在data/cal/，convert/的两个txt文件是刻度系数，自己设置。自动转数据的脚本在scripts/，.x auto_convert.sh运行后按示例输入即可。
