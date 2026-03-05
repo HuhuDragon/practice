@@ -1,0 +1,161 @@
+ +------------------------------------------------------+
+ |                                                      |
+ | BAT version 1.0.0                                    |
+ | Copyright (C) 2007-2018, the BAT core developer team |
+ | All rights reserved.                                 |
+ |                                                      |
+ | For the licensing terms see doc/COPYING              |
+ | For documentation see http://mpp.mpg.de/bat          |
+ | Please cite: DOI 10.1016/j.cpc.2009.06.026           |
+ |              http://arxiv.org/abs/0808.2552          |
+ |                                                      |
+ +------------------------------------------------------+
+Summary : Opening logfile log.txt
+Summary : Marginalize using Metropolis
+Summary : Pre-run Metropolis MCMC for model "" ...
+Summary :  --> Perform MCMC pre-run with 4 chains, each with maximum 100000 iterations
+Detail  :      * Efficiency status: Efficiencies not within predefined range after 500 iterations. Efficiency of 
+Detail  :          chain 0 is above 35 % (48 %). Scale increased to 2.832
+Detail  :          chain 1 is below 15 % (2 %). Scale decreased to 1.259
+Detail  :          chain 2 is below 15 % (10 %). Scale decreased to 1.259
+Detail  :          chain 3 is below 15 % (5 %). Scale decreased to 1.259
+Detail  :      * Efficiency status: Efficiencies not within predefined range after 1000 iterations. Efficiency of 
+Detail  :          chain 0 is below 15 % (1 %). Scale decreased to 1.888
+Detail  :          chain 1 is below 15 % (6 %). Scale decreased to 0.8392
+Detail  :          chain 2 is below 15 % (1 %). Scale decreased to 0.8392
+Detail  :          chain 3 is below 15 % (2 %). Scale decreased to 0.8392
+Detail  :      * Efficiency status: Efficiencies not within predefined range after 1500 iterations. Efficiency of 
+Detail  :          chain 0 is below 15 % (3 %). Scale decreased to 1.259
+Detail  :          chain 1 is below 15 % (7 %). Scale decreased to 0.5594
+Detail  :          chain 2 is below 15 % (7 %). Scale decreased to 0.5594
+Detail  :          chain 3 is below 15 % (5 %). Scale decreased to 0.5594
+Detail  :      * Efficiency status: Efficiencies not within predefined range after 2000 iterations. Efficiency of 
+Detail  :          chain 0 is below 15 % (6 %). Scale decreased to 0.8392
+Detail  :          chain 1 is below 15 % (15 %). Scale decreased to 0.373
+Detail  :          chain 3 is below 15 % (14 %). Scale decreased to 0.373
+Detail  :      * Efficiency status: Efficiencies not within predefined range after 2500 iterations. Efficiency of 
+Detail  :          chain 0 is below 15 % (12 %). Scale decreased to 0.5594
+Summary :  --> Set of 4 Markov chains converged within 3000 iterations, and all scales are adjusted.
+Summary :  --> 5 updates to multivariate proposal function's covariances were made.
+Detail  :  --> Scale factors and efficiencies (measured in last 500 iterations):
+Detail  :        - Chain : Scale factor    Efficiency
+Detail  :              0 :        0.5594        19.3 %
+Detail  :              1 :        0.373        25.8 %
+Detail  :              2 :        0.5594        26.7 %
+Detail  :              3 :        0.373        25.2 %
+Summary : Run Metropolis MCMC for model "" ...
+Summary :  --> Perform MCMC run with 4 chains, each with 100000 iterations.
+Detail  :  --> iteration number  10000 ( 10 %)
+Detail  :  --> iteration number  20000 ( 20 %)
+Detail  :  --> iteration number  30000 ( 30 %)
+Detail  :  --> iteration number  40000 ( 40 %)
+Detail  :  --> iteration number  50000 ( 50 %)
+Detail  :  --> iteration number  60000 ( 60 %)
+Detail  :  --> iteration number  70000 ( 70 %)
+Detail  :  --> iteration number  80000 ( 80 %)
+Detail  :  --> iteration number  90000 ( 90 %)
+Detail  :  --> iteration number 100000 (100 %)
+Summary :  --> Markov chains ran for 100000 iterations.
+Detail  :  --> Efficiencies (measured in 100000 iterations):
+Detail  :        - Chain : Efficiency
+Detail  :              0 :     19.3 %
+Detail  :              1 :     26.3 %
+Detail  :              2 :     22.1 %
+Detail  :              3 :     23.0 %
+Detail  :  --> Global mode from MCMC:
+Detail  :           branch1 :    137.78
+Detail  :           branch2 :    293.76
+Detail  :           branch3 :    9.77e+05
+Detail  :           branch4 :    28105
+Summary : Printing all marginalized distributions (3 x 1D + 3 x 2D = 6) into file marginalized.pdf
+Summary : 
+Summary :  -----------------------------------------------------
+Summary :  Summary
+Summary :  -----------------------------------------------------
+Summary : 
+Summary :  Model summary
+Summary :  =============
+Summary :  Model: 
+Summary :  Number of parameters: 4
+Summary : 
+Summary :  List of parameters and ranges:
+Summary :  0) branch1 : [1, 1000]
+Summary :  1) branch2 : [1, 1000]
+Summary :  2) branch3 : [9.77e+05, 9.77e+05] (fixed at 977000.000)
+Summary :  3) branch4 : [10000, 50000]
+Summary : 
+Summary : 
+Summary :  Results of the optimization
+Summary :  ===========================
+Summary :  Optimization algorithm used: Default
+Summary :  Best Fit Results
+Summary :  ===========================
+Summary :  Log of the maximum posterior: -83.554679
+Summary : 
+Summary :  Global mode:
+Summary :  0)  Parameter "branch1" : 138.78 +- 23.194
+Summary :  1)  Parameter "branch2" : 294.44 +- 28.062
+Summary :  2)  Parameter "branch3" : 9.77e+05 (fixed) +- 0
+Summary :  3)  Parameter "branch4" : 28076 +- 1667.2
+Summary : 
+Summary :  Marginalization algorithm used: Metropolis
+Summary : 
+Summary :  Results of the marginalization
+Summary :  ==============================
+Summary :  List of variables and properties of the marginalized distributions:
+Summary : 
+Summary :   (0) Parameter "branch1" :
+Summary :       Mean +- sqrt(Variance):         +140.72 +- 23.21
+Summary :       Median +- central 68% interval: +139.83 + 24.479 - 22.617
+Summary :       (Marginalized) mode:            +135.87
+Summary :        5% quantile:                   +103.25
+Summary :       10% quantile:                   +111.52
+Summary :       16% quantile:                   +117.21
+Summary :       84% quantile:                   +164.31
+Summary :       90% quantile:                   +171.26
+Summary :       95% quantile:                   +180.43
+Summary :       Smallest interval containing 71.6% and local mode:
+Summary :       (110.89, 160.84) (local mode at 135.87 with rel. height 1; rel. area 1)
+Summary : 
+Summary :   (1) Parameter "branch2" :
+Summary :       Mean +- sqrt(Variance):         +296.59 +- 28.051
+Summary :       Median +- central 68% interval: +295.83 + 28.96 - 27.417
+Summary :       (Marginalized) mode:            +295.7
+Summary :        5% quantile:                   +251.67
+Summary :       10% quantile:                   +261.22
+Summary :       16% quantile:                   +268.42
+Summary :       84% quantile:                   +324.79
+Summary :       90% quantile:                   +333.38
+Summary :       95% quantile:                   +344.71
+Summary :       Smallest interval containing 71.2% and local mode:
+Summary :       (260.74, 320.68) (local mode at 295.7 with rel. height 1; rel. area 1)
+Summary : 
+Summary :   (2) Parameter "branch3" : fixed at 9.77e+05
+Summary : 
+Summary :   (3) Parameter "branch4" :
+Summary :       Mean +- sqrt(Variance):         +28109 +- 1672.3
+Summary :       Median +- central 68% interval: +28099 + 1685.4 - 1663.7
+Summary :       (Marginalized) mode:            +28200
+Summary :        5% quantile:                   +25369
+Summary :       10% quantile:                   +25961
+Summary :       16% quantile:                   +26435
+Summary :       84% quantile:                   +29784
+Summary :       90% quantile:                   +30272
+Summary :       95% quantile:                   +30896
+Summary :       Smallest interval containing 71.6% and local mode:
+Summary :       (26400, 30000) (local mode at 28200 with rel. height 1; rel. area 1)
+Summary : 
+Summary :  Status of the MCMC
+Summary :  ==================
+Summary :  Convergence reached:                    yes
+Summary :  Number of iterations until convergence: 3000
+Summary :  Number of chains:                       4
+Summary :  Number of iterations per chain:         100000
+Detail  :  Scale factors and efficiencies (measured in last 100000 iterations):
+Detail  :  Chain : Scale factor    Efficiency
+Detail  :      0 :       0.5594        19.3 %
+Detail  :      1 :       0.373         26.3 %
+Detail  :      2 :       0.5594        22.1 %
+Detail  :      3 :       0.373         23.0 %
+Warning : BCMTF::PrintStack : Did not run MCMC. Error bands are not available.
+Warning : BCMTF::PrintStack : Did not run MCMC. Error bands are not available.
