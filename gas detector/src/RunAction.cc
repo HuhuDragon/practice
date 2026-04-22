@@ -7,7 +7,6 @@
 RunAction::RunAction(const SimConfig& cfg) : cfg_(cfg) {
   auto* analysis = G4AnalysisManager::Instance();
   analysis->SetDefaultFileType("root");
-  analysis->SetNtupleMerging(true);
   analysis->SetVerboseLevel(0);
 }
 
@@ -15,6 +14,11 @@ RunAction::~RunAction() = default;
 
 void RunAction::BeginOfRunAction(const G4Run*) {
   auto* analysis = G4AnalysisManager::Instance();
+
+  // 仅在 master 线程启用 ntuple merging，避免 worker 线程警告 Analysis_W001。
+  if (IsMaster()) {
+    analysis->SetNtupleMerging(true);
+  }
 
   analysis->OpenFile(cfg_.output_root);
 
