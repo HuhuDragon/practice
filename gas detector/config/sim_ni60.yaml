@@ -13,4 +13,4 @@ detector:
 run:
   particles_per_round: 1000
   rounds: 5
-  output_csv: "events_ni60_q22.csv"
+  output_root: "events_ni60_q22.root"

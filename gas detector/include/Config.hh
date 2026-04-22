@@ -23,7 +23,7 @@ struct SimConfig {
   int particles_per_round{1000};
   int rounds{1};
 
-  std::string output_csv{"events.csv"};
+  std::string output_root{"events.root"};
 };
 
 SimConfig LoadConfig(const std::string& yaml_path);

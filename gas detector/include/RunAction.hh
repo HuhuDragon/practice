@@ -4,8 +4,6 @@
 
 #include <G4UserRunAction.hh>
 
-#include <fstream>
-
 class G4Run;
 
 class RunAction : public G4UserRunAction {
@@ -20,5 +18,5 @@ class RunAction : public G4UserRunAction {
 
  private:
   SimConfig cfg_;
-  std::ofstream out_;
+  int event_id_{0};
 };

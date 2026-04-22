@@ -38,7 +38,8 @@ SimConfig LoadConfig(const std::string& yaml_path) {
   if (const auto run = root["run"]) {
     if (run["particles_per_round"]) cfg.particles_per_round = run["particles_per_round"].as<int>();
     if (run["rounds"]) cfg.rounds = run["rounds"].as<int>();
-    if (run["output_csv"]) cfg.output_csv = run["output_csv"].as<std::string>();
+    if (run["output_root"]) cfg.output_root = run["output_root"].as<std::string>();
+    if (run["output_csv"]) cfg.output_root = run["output_csv"].as<std::string>();  // 向后兼容旧字段
   }
 
   return cfg;
