@@ -13,9 +13,20 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
   const auto* volume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
   const auto& name = volume->GetName();
 
-  if (name == "AnodeE1") event_action_->AddToAnode(0, edep);
-  if (name == "AnodeE2") event_action_->AddToAnode(1, edep);
-  if (name == "AnodeE3") event_action_->AddToAnode(2, edep);
-  if (name == "AnodeE4") event_action_->AddToAnode(3, edep);
-  if (name == "CathodeEtotal" || name == "GasChamber") event_action_->AddToTotal(edep);
+  if (name == "AnodeE1") {
+    event_action_->AddToAnode(0, edep);
+    event_action_->AddToTotal(edep);
+  }
+  if (name == "AnodeE2") {
+    event_action_->AddToAnode(1, edep);
+    event_action_->AddToTotal(edep);
+  }
+  if (name == "AnodeE3") {
+    event_action_->AddToAnode(2, edep);
+    event_action_->AddToTotal(edep);
+  }
+  if (name == "AnodeE4") {
+    event_action_->AddToAnode(3, edep);
+    event_action_->AddToTotal(edep);
+  }
 }

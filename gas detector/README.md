@@ -38,6 +38,8 @@ make -j
 
 输出：ROOT 文件（默认由 `output_root` 指定），包含 `gas` ntuple，每个事件写入 `E1,E2,E3,E4,Etotal`（单位 MeV）。
 
+默认使用串行 RunManager，输出单个 ROOT 文件（不会生成 `_t0/_t1...` 分线程文件）。
+
 ## YAML 参数说明
 
 ### 1）混合束写法（推荐）

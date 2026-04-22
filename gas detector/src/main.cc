@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 
   const auto cfg = LoadConfig(argv[1]);
 
-  auto run_manager = std::unique_ptr<G4RunManager>(G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default));
+  auto run_manager = std::unique_ptr<G4RunManager>(G4RunManagerFactory::CreateRunManager(G4RunManagerType::SerialOnly));
   run_manager->SetUserInitialization(new DetectorConstruction(cfg));
   run_manager->SetUserInitialization(new QGSP_BIC);
   run_manager->SetUserInitialization(new ActionInitialization(cfg));
