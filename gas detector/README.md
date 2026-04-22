@@ -36,7 +36,7 @@ make -j
 ./gas_detector ../config/sim_ni60.yaml
 ```
 
-输出：CSV 文件（默认由 `output_csv` 指定），包含每个事件的 `E1,E2,E3,E4,Etotal`（单位 MeV）。
+输出：ROOT 文件（默认由 `output_root` 指定），包含 `gas` ntuple，每个事件写入 `E1,E2,E3,E4,Etotal`（单位 MeV）。
 
 ## YAML 参数说明
 
@@ -66,7 +66,7 @@ detector:
 run:
   particles_per_round: 1000
   rounds: 5
-  output_csv: "events_mix_fe60_ni60.csv"
+  output_root: "events_mix_fe60_ni60.root"
 ```
 
 ### 2）单粒子写法（兼容）

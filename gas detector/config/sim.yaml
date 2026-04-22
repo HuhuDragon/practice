@@ -20,4 +20,4 @@ detector:
 run:
   particles_per_round: 1000
   rounds: 5
-  output_csv: "events_mix_fe60_ni60.csv"
+  output_root: "events_mix_fe60_ni60.root"
