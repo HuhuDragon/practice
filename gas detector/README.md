@@ -1,6 +1,6 @@
 # gas detector（Geant4 气体探测器模拟）
 
-本目录提供一套基于 Geant4 的模拟程序，用于模拟 **100 MeV 入射**离子在气体探测器中的能量沉积。程序参数通过 YAML 文件统一配置，可设置：
+本目录提供一套基于 Geant4 的模拟程序，用于模拟离子在气体探测器中的能量沉积。程序参数通过 YAML 文件统一配置，可设置：
 
 - 单粒子或多粒子混合发射（如 `60Fe` + `60Ni`）
 - 各粒子电荷态（`charge_state`）
@@ -40,9 +40,6 @@ make -j
 
 输出：ROOT 文件（默认由 `output_root` 指定），包含 `gas` ntuple，每个事件写入 `E1,E2,E3,E4,Etotal`（单位 MeV）。
 
-默认使用串行 RunManager，输出单个 ROOT 文件（不会生成 `_t0/_t1...` 分线程文件）。
-
-运行时终端会显示事件处理进度条。
 
 ## YAML 参数说明
 
@@ -106,7 +103,7 @@ particle:
 
 ## ROOT 二维谱绘图程序
 
-新增 ROOT 宏：`tools/draw_energy_pairs.C`，用于从输出文件中的 `gas` 树读取 `e1_MeV~e4_MeV` 并绘制（仅显示，不自动保存）：
+新增 ROOT 宏：`tools/draw_energy_pairs.C`，用于从输出文件中的 `gas` 树读取 `e1_MeV~e4_MeV` ：
 
 - `e1:e2`
 - `e1:e3`
@@ -118,5 +115,5 @@ particle:
 运行示例：
 
 ```bash
-root -l -q 'tools/draw_energy_pairs.C("events_mix_fe60_ni60.root","gas")'
+root -l -q 'draw_energy_pairs.C("events_mix_fe60_ni60.root","gas")'
 ```

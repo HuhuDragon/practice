@@ -3,21 +3,21 @@ particles:
   - name: "Fe60"
     z: 26
     a: 60
-    charge_state: 20
-    kinetic_energy_mev: 100.0
+    charge_state: 10
+    kinetic_energy_mev: 113.0
     energy_sigma_mev: 0.5
-    ratio: 0.7
+    ratio: 0.01
   - name: "Ni60"
     z: 28
     a: 60
-    charge_state: 22
-    kinetic_energy_mev: 100.0
+    charge_state: 10
+    kinetic_energy_mev: 113.0
     energy_sigma_mev: 0.5
-    ratio: 0.3
+    ratio: 0.99
 
 detector:
   gas_material: "G4_PROPANE"
-  gas_pressure_mbar: 38.7
+  gas_pressure_mbar: 43.5
 
 beam:
   x_mean_mm: 0.0
@@ -27,6 +27,6 @@ beam:
   z_mm: -185.0
 
 run:
-  particles_per_round: 1000
+  particles_per_round: 2000
   rounds: 5
   output_root: "events_mix_fe60_ni60.root"
