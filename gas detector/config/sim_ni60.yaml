@@ -1,0 +1,16 @@
+# 单粒子示例：仅发射 60Ni
+particle:
+  name: "Ni60"
+  z: 28
+  a: 60
+  charge_state: 22
+  kinetic_energy_mev: 100.0
+
+detector:
+  gas_material: "G4_PROPANE"
+  gas_pressure_mbar: 38.7
+
+run:
+  particles_per_round: 1000
+  rounds: 5
+  output_root: "events_ni60_q22.root"
