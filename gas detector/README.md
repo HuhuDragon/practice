@@ -106,7 +106,7 @@ particle:
 
 ## ROOT 二维谱绘图程序
 
-新增 ROOT 宏：`tools/draw_energy_pairs.C`，用于从输出文件中的 `gas` 树读取 `e1_MeV~e4_MeV` 并绘制：
+新增 ROOT 宏：`tools/draw_energy_pairs.C`，用于从输出文件中的 `gas` 树读取 `e1_MeV~e4_MeV` 并绘制（仅显示，不自动保存）：
 
 - `e1:e2`
 - `e1:e3`
@@ -118,5 +118,5 @@ particle:
 运行示例：
 
 ```bash
-root -l -q 'tools/draw_energy_pairs.C("events_mix_fe60_ni60.root","gas","energy_pairs.png")'
+root -l -q 'tools/draw_energy_pairs.C("events_mix_fe60_ni60.root","gas")'
 ```

@@ -16,8 +16,7 @@ struct PairDef {
 };
 }
 
-void draw_energy_pairs(const char* input_root = "events.root", const char* tree_name = "gas",
-                       const char* out_png = "energy_pairs.png") {
+void draw_energy_pairs(const char* input_root = "events.root", const char* tree_name = "gas") {
   gStyle->SetOptStat(0);
 
   TFile fin(input_root, "READ");
@@ -73,6 +72,7 @@ void draw_energy_pairs(const char* input_root = "events.root", const char* tree_
     h2[i]->Draw("COLZ");
   }
 
-  c.SaveAs(out_png);
-  std::cout << "[OK] Saved spectrum figure: " << out_png << '\n';
+  c.Update();
+  std::cout << "[OK] 2D spectra are drawn on canvas c_pairs." << '\n';
+  std::cout << "[INFO] Use c_pairs->SaveAs(\"your_name.png\") manually if needed." << '\n';
 }
