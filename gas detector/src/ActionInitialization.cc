@@ -13,7 +13,8 @@ void ActionInitialization::Build() const {
   auto* run_action = new RunAction(cfg_);
   SetUserAction(run_action);
 
-  auto* event_action = new EventAction();
+  const int total_events = cfg_.particles_per_round * cfg_.rounds;
+  auto* event_action = new EventAction(total_events);
   SetUserAction(event_action);
 
   SetUserAction(new SteppingAction(event_action));
