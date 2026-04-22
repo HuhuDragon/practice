@@ -10,6 +10,7 @@ ParticleSpec ParseParticleNode(const YAML::Node& node, const ParticleSpec& defau
   if (node["a"]) p.a = node["a"].as<int>();
   if (node["charge_state"]) p.charge_state = node["charge_state"].as<int>();
   if (node["kinetic_energy_mev"]) p.kinetic_energy_mev = node["kinetic_energy_mev"].as<double>();
+  if (node["energy_sigma_mev"]) p.energy_sigma_mev = node["energy_sigma_mev"].as<double>();
   if (node["ratio"]) p.ratio = node["ratio"].as<double>();
   return p;
 }
@@ -33,6 +34,14 @@ SimConfig LoadConfig(const std::string& yaml_path) {
   if (const auto detector = root["detector"]) {
     if (detector["gas_material"]) cfg.gas_material = detector["gas_material"].as<std::string>();
     if (detector["gas_pressure_mbar"]) cfg.gas_pressure_mbar = detector["gas_pressure_mbar"].as<double>();
+  }
+
+  if (const auto beam = root["beam"]) {
+    if (beam["x_mean_mm"]) cfg.beam_x_mean_mm = beam["x_mean_mm"].as<double>();
+    if (beam["y_mean_mm"]) cfg.beam_y_mean_mm = beam["y_mean_mm"].as<double>();
+    if (beam["x_sigma_mm"]) cfg.beam_x_sigma_mm = beam["x_sigma_mm"].as<double>();
+    if (beam["y_sigma_mm"]) cfg.beam_y_sigma_mm = beam["y_sigma_mm"].as<double>();
+    if (beam["z_mm"]) cfg.beam_z_mm = beam["z_mm"].as<double>();
   }
 
   if (const auto run = root["run"]) {

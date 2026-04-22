@@ -5,6 +5,8 @@
 - 单粒子或多粒子混合发射（如 `60Fe` + `60Ni`）
 - 各粒子电荷态（`charge_state`）
 - 各粒子发射比例（`ratio`）
+- 各粒子发射能量高斯展宽（`energy_sigma_mev`）
+- 束流发射位置二维高斯（`beam.x/y mean + sigma`）
 - 探测器气体种类与气压
 - 每一轮发射粒子个数与轮数
 
@@ -55,17 +57,26 @@ particles:
     a: 60
     charge_state: 20
     kinetic_energy_mev: 100.0
+    energy_sigma_mev: 0.5
     ratio: 0.7
   - name: "Ni60"
     z: 28
     a: 60
     charge_state: 22
     kinetic_energy_mev: 100.0
+    energy_sigma_mev: 0.5
     ratio: 0.3
 
 detector:
   gas_material: "G4_PROPANE"
   gas_pressure_mbar: 38.7
+
+beam:
+  x_mean_mm: 0.0
+  y_mean_mm: 0.0
+  x_sigma_mm: 2.0
+  y_sigma_mm: 2.0
+  z_mm: -185.0
 
 run:
   particles_per_round: 1000
@@ -82,6 +93,30 @@ particle:
   a: 60
   charge_state: 22
   kinetic_energy_mev: 100.0
+  energy_sigma_mev: 0.8
 ```
 
 总事件数 = `particles_per_round * rounds`。
+
+## 高斯发射说明
+
+- 发射位置采用二维高斯分布：`x ~ N(x_mean_mm, x_sigma_mm)`，`y ~ N(y_mean_mm, y_sigma_mm)`，`z = z_mm` 固定。
+- 发射能量采用高斯分布：`E ~ N(kinetic_energy_mev, energy_sigma_mev)`。
+- 当 `x_sigma_mm/y_sigma_mm/energy_sigma_mev <= 0` 时，对应维度退化为固定值（即不展宽）。
+
+## ROOT 二维谱绘图程序
+
+新增 ROOT 宏：`tools/draw_energy_pairs.C`，用于从输出文件中的 `gas` 树读取 `e1_MeV~e4_MeV` 并绘制：
+
+- `e1:e2`
+- `e1:e3`
+- `e1:e4`
+- `e2:e3`
+- `e2:e4`
+- `e3:e4`
+
+运行示例：
+
+```bash
+root -l -q 'tools/draw_energy_pairs.C("events_mix_fe60_ni60.root","gas","energy_pairs.png")'
+```
