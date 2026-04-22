@@ -60,29 +60,24 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
                     false,
                     0);
 
-  // 四个阳极板长度：100, 80, 60, 130 mm；一个阴极板长度 373 mm。
-  const double anode_lengths[4] = {100.0 * mm, 80.0 * mm, 60.0 * mm, 130.0 * mm};
-  const char* anode_names[4] = {"AnodeE1", "AnodeE2", "AnodeE3", "AnodeE4"};
-  const double electrode_t = 0.5 * mm;
+  // 以“气体分段体积”表示 E1~E4 信号区，确保可统计该区能量沉积。
+  const double seg_lengths[4] = {100.0 * mm, 80.0 * mm, 60.0 * mm, 130.0 * mm};
+  const char* seg_names[4] = {"AnodeE1", "AnodeE2", "AnodeE3", "AnodeE4"};
 
   double z_cursor = -chamber_z / 2;
   for (int i = 0; i < 4; ++i) {
-    const double seg_z = anode_lengths[i];
+    const double seg_z = seg_lengths[i];
     const double z_center = z_cursor + seg_z / 2.0;
 
-    auto* solid = new G4Box(anode_names[i], chamber_x / 2, electrode_t / 2, seg_z / 2);
-    auto* logic = new G4LogicalVolume(solid, al, anode_names[i]);
-    new G4PVPlacement(nullptr,
-                      G4ThreeVector(0, chamber_y / 2 - electrode_t / 2, z_center),
-                      logic,
-                      anode_names[i],
-                      logic_chamber,
-                      false,
-                      i);
+    auto* solid_seg = new G4Box(seg_names[i], chamber_x / 2, chamber_y / 2, seg_z / 2);
+    auto* logic_seg = new G4LogicalVolume(solid_seg, gas_mat, seg_names[i]);
+    new G4PVPlacement(nullptr, G4ThreeVector(0, 0, z_center), logic_seg, seg_names[i], logic_chamber, false, i);
 
     z_cursor += seg_z;
   }
 
+  // 保留阴极与栅极几何（结构展示用，不用于 E1~E4 分段计数）。
+  const double electrode_t = 0.5 * mm;
   auto* solid_cathode = new G4Box("CathodeEtotal", chamber_x / 2, electrode_t / 2, chamber_z / 2);
   auto* logic_cathode = new G4LogicalVolume(solid_cathode, al, "CathodeEtotal");
   new G4PVPlacement(nullptr,
@@ -93,11 +88,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
                     false,
                     0);
 
-  // 简化栅极层。
   const double grid_t = 0.1 * mm;
   auto* solid_grid = new G4Box("GridLayer", chamber_x / 2, grid_t / 2, chamber_z / 2);
   auto* logic_grid = new G4LogicalVolume(solid_grid, al, "GridLayer");
-  new G4PVPlacement(nullptr, G4ThreeVector(0, 0, 0), logic_grid, "GridLayer", logic_chamber, false, 0);
+  new G4PVPlacement(nullptr, G4ThreeVector(0, chamber_y / 2 - 2.0 * mm, 0), logic_grid, "GridLayer", logic_chamber, false, 0);
 
   return phys_world;
 }
