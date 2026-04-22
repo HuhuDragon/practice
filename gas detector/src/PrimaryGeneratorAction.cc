@@ -9,11 +9,12 @@
 #include <Randomize.hh>
 
 #include <algorithm>
+#include <cmath>
 
 PrimaryGeneratorAction::PrimaryGeneratorAction(const SimConfig& cfg) : cfg_(cfg), gun_(new G4ParticleGun(1)) {
   BuildBeamComposition();
   gun_->SetParticleMomentumDirection({0, 0, 1});
-  gun_->SetParticlePosition({0, 0, -185.0 * mm});
+  gun_->SetParticlePosition({cfg_.beam_x_mean_mm * mm, cfg_.beam_y_mean_mm * mm, cfg_.beam_z_mm * mm});
 }
 
 PrimaryGeneratorAction::~PrimaryGeneratorAction() { delete gun_; }
@@ -58,8 +59,17 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* event) {
   const auto& p = SampleParticle();
   auto* ion = G4IonTable::GetIonTable()->GetIon(p.z, p.a, 0.0);
 
+  const double x_mm = (cfg_.beam_x_sigma_mm > 0.0) ? G4RandGauss::shoot(cfg_.beam_x_mean_mm, cfg_.beam_x_sigma_mm)
+                                                   : cfg_.beam_x_mean_mm;
+  const double y_mm = (cfg_.beam_y_sigma_mm > 0.0) ? G4RandGauss::shoot(cfg_.beam_y_mean_mm, cfg_.beam_y_sigma_mm)
+                                                   : cfg_.beam_y_mean_mm;
+  const double energy_mean = p.kinetic_energy_mev;
+  const double energy_mev =
+      (p.energy_sigma_mev > 0.0) ? std::max(0.0, G4RandGauss::shoot(energy_mean, p.energy_sigma_mev)) : energy_mean;
+
   gun_->SetParticleDefinition(ion);
   gun_->SetParticleCharge(p.charge_state * eplus);
-  gun_->SetParticleEnergy(p.kinetic_energy_mev * MeV);
+  gun_->SetParticlePosition({x_mm * mm, y_mm * mm, cfg_.beam_z_mm * mm});
+  gun_->SetParticleEnergy(energy_mev * MeV);
   gun_->GeneratePrimaryVertex(event);
 }
