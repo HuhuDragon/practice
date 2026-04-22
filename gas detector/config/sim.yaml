@@ -1,0 +1,23 @@
+# 混合束示例：60Fe 与 60Ni 同时发射，比例 7:3
+particles:
+  - name: "Fe60"
+    z: 26
+    a: 60
+    charge_state: 20
+    kinetic_energy_mev: 100.0
+    ratio: 0.7
+  - name: "Ni60"
+    z: 28
+    a: 60
+    charge_state: 22
+    kinetic_energy_mev: 100.0
+    ratio: 0.3
+
+detector:
+  gas_material: "G4_PROPANE"
+  gas_pressure_mbar: 38.7
+
+run:
+  particles_per_round: 1000
+  rounds: 5
+  output_csv: "events_mix_fe60_ni60.csv"
