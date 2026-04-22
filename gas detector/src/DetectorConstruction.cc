@@ -19,7 +19,8 @@ G4Material* DetectorConstruction::BuildGasMaterial() const {
   const double density = base->GetDensity() * scale;
 
   const double pressure = cfg_.gas_pressure_mbar * bar / 1000.0;
-  auto* gas = new G4Material("DetectorGas", density, base, kStateGas, STP_Temperature, pressure);
+  const double temperature = 273.15 * kelvin;
+  auto* gas = new G4Material("DetectorGas", density, base, kStateGas, temperature, pressure);
   return gas;
 }
 
