@@ -5,17 +5,26 @@ particles:
     a: 60
     charge_state: 20
     kinetic_energy_mev: 100.0
+    energy_sigma_mev: 0.5
     ratio: 0.7
   - name: "Ni60"
     z: 28
     a: 60
     charge_state: 22
     kinetic_energy_mev: 100.0
+    energy_sigma_mev: 0.5
     ratio: 0.3
 
 detector:
   gas_material: "G4_PROPANE"
   gas_pressure_mbar: 38.7
+
+beam:
+  x_mean_mm: 0.0
+  y_mean_mm: 0.0
+  x_sigma_mm: 2.0
+  y_sigma_mm: 2.0
+  z_mm: -185.0
 
 run:
   particles_per_round: 1000
