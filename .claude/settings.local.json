@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./batch_process_fixed.sh replace:*)",
+      "Bash(./batch_process_fixed.sh rename:*)",
+      "Bash(rm -f demo1.txt demo2.txt batch_process.sh batch_process_usage.md)",
+      "Bash(ls -la *.sh *.md)"
+    ]
+  }
+}

@@ -73,6 +73,5 @@ void draw_energy_pairs(const char* input_root = "events.root", const char* tree_
   }
 
   c.Update();
-  std::cout << "[OK] 2D spectra are drawn on canvas c_pairs." << '\n';
-  std::cout << "[INFO] Use c_pairs->SaveAs(\"your_name.png\") manually if needed." << '\n';
+  c.SaveAs("picture.pdf");
 }
