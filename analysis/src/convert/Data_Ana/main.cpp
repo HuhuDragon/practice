@@ -7,7 +7,10 @@
 #include <iostream>
 #include <map>
 #include <queue>
+#include <sstream>
+#include <string>
 #include <thread>
+#include <vector>
 
 #include "TBranch.h"
 #include "TClonesArray.h"
@@ -27,14 +30,156 @@
 
 using namespace std;
 
+const int N_CAL_DET = 48;
+
+void InitCalibration(double cal[N_CAL_DET][3])
+{
+  for (int det = 0; det < N_CAL_DET; det++)
+  {
+    cal[det][0] = 0.0;
+    cal[det][1] = 1.0;
+    cal[det][2] = 0.0;
+  }
+}
+
+double CalibratedEnergy(double raw, const double coeff[3])
+{
+  return coeff[0] + coeff[1] * raw + coeff[2] * raw * raw;
+}
+
+bool LoadPerDetectorCalibration(const char *filename, double cal[N_CAL_DET][3])
+{
+  ifstream ifile(filename);
+  if (!ifile.is_open())
+    return false;
+
+  vector<vector<double>> rows;
+  string line;
+  while (getline(ifile, line))
+  {
+    if (line.empty() || line[0] == '#')
+      continue;
+
+    istringstream iss(line);
+    vector<double> values;
+    double value = 0;
+    while (iss >> value)
+      values.push_back(value);
+
+    if (!values.empty())
+      rows.push_back(values);
+  }
+
+  if (rows.empty())
+    return false;
+
+  // Legacy format: one line with global p2 p1 p0, used together with alig_factor.txt.
+  if (rows.size() == 1 && rows[0].size() == 3)
+    return false;
+
+  int loaded = 0;
+  for (size_t i = 0; i < rows.size() && i < N_CAL_DET; i++)
+  {
+    const vector<double> &row = rows[i];
+    int det = static_cast<int>(i);
+    double p0 = 0;
+    double p1 = 1;
+    double p2 = 0;
+
+    if (row.size() >= 6)
+    {
+      det = static_cast<int>(row[0]);
+      p0 = row[3];
+      p1 = row[4];
+      p2 = row[5];
+    }
+    else if (row.size() == 4)
+    {
+      det = static_cast<int>(row[0]);
+      p0 = row[1];
+      p1 = row[2];
+      p2 = row[3];
+    }
+    else if (row.size() == 3)
+    {
+      p0 = row[0];
+      p1 = row[1];
+      p2 = row[2];
+    }
+    else
+    {
+      continue;
+    }
+
+    if (det < 0 || det >= N_CAL_DET)
+      continue;
+
+    cal[det][0] = p0;
+    cal[det][1] = p1;
+    cal[det][2] = p2;
+    loaded++;
+  }
+
+  return loaded > 0;
+}
+
+bool LoadLegacyCalibration(double cal[N_CAL_DET][3])
+{
+  double alpha[3] = {0.0, 1.0, 0.0};
+  ifstream calFile("../cali_factor.txt");
+  if (!calFile.is_open())
+    return false;
+
+  if (!(calFile >> alpha[0] >> alpha[1] >> alpha[2]))
+    return false;
+
+  double slope[N_CAL_DET];
+  for (int det = 0; det < N_CAL_DET; det++)
+    slope[det] = 1.0;
+
+  ifstream alignFile("../alig_factor.txt");
+  for (int det = 0; det < N_CAL_DET && alignFile.is_open(); det++)
+  {
+    if (!(alignFile >> slope[det]))
+      break;
+  }
+
+  for (int det = 0; det < N_CAL_DET; det++)
+  {
+    cal[det][0] = alpha[2];
+    cal[det][1] = alpha[1] * slope[det];
+    cal[det][2] = alpha[0] * slope[det] * slope[det];
+  }
+
+  return true;
+}
+
+void LoadCalibration(double cal[N_CAL_DET][3])
+{
+  InitCalibration(cal);
+
+  if (LoadPerDetectorCalibration("../cali_factor.txt", cal))
+  {
+    cout << "Loaded per-detector calibration from ../cali_factor.txt" << endl;
+    return;
+  }
+
+  if (LoadLegacyCalibration(cal))
+  {
+    cout << "Loaded legacy calibration from ../cali_factor.txt and ../alig_factor.txt" << endl;
+    return;
+  }
+
+  cerr << "Cannot load calibration factors; identity calibration will be used" << endl;
+}
+
 /////////////////
 int Data_Ana(char *RunName, int RunNum)
 {
   //   TRandom3 r(0);
 
   float Ecut = 10;
-  double Slope_E[XIA_Modules][XIA_CH];
-  double alpha[3];
+  double Cal_E[N_CAL_DET][3];
   //   double Offset_E[XIA_Modules][XIA_CH];
   int ret;
   int ModuleID, ChannelID;
@@ -61,23 +206,7 @@ int Data_Ana(char *RunName, int RunNum)
   int nhit, Innernhit;
 
   TString str_tmp;
-  ifstream ifile;
-
-  ifile.open("../cali_factor.txt");
-  ifile >> alpha[0] >> alpha[1] >> alpha[2];
-  ifile.close();
-
-  ifile.open("../alig_factor.txt");
-  // while(true)
-  for (int i = 0; i < XIA_Modules - 1; i++)
-    for (int j = 0; j < XIA_CH; j++)
-    {
-      ifile >> Slope_E[i][j];
-      // Slope_E[i][j]=Slope_E[i][j]*0.985;
-      // cout << "Slope_E[" << i << "][" << j << "]" << Slope_E[i][j] << endl;
-      if (ifile.eof() != 0)
-        break;
-    }
+  LoadCalibration(Cal_E);
 
   str_tmp = str_tmp.Format("../../../data/final/%s%05d_final.root", RunName, RunNum);
   TFile *f_input = new TFile(str_tmp.Data());
@@ -199,63 +328,57 @@ int Data_Ana(char *RunName, int RunNum)
       E_row = ((MyXIAData *)(*XIA_data)[j])->Energy;
       T_row = ((MyXIAData *)(*XIA_data)[j])->Event_ts;
       CFD_row = ((MyXIAData *)(*XIA_data)[j])->CFD;
-      ts[ChannelID + ModuleID * 16] = T_row + CFD_row;
+      int detID = ChannelID + ModuleID * XIA_CH;
+      if (detID < 0 || detID >= N_CAL_DET)
+        continue;
+
+      ts[detID] = T_row + CFD_row;
 
       if (E_row > Ecut && ModuleID == 0)
       {
-        raw[ChannelID + ModuleID * 16] = E_row;
-        single[ChannelID + ModuleID * 16] =
-            E_row * Slope_E[ModuleID][ChannelID];
-        single[ChannelID + ModuleID * 16] =
-            single[ChannelID + ModuleID * 16] * single[ChannelID + ModuleID * 16] * alpha[0] + single[ChannelID + ModuleID * 16] * alpha[1] + alpha[2];
-        sum = sum + single[ChannelID + ModuleID * 16];
-        singleInner[ChannelID + ModuleID * 16] =
-            single[ChannelID + ModuleID * 16];
-        sumInner = sumInner + single[ChannelID + ModuleID * 16];
-        if (single[ChannelID + ModuleID * 16] > 0)
+        raw[detID] = E_row;
+        single[detID] = CalibratedEnergy(E_row, Cal_E[detID]);
+        sum = sum + single[detID];
+        singleInner[detID] = single[detID];
+        sumInner = sumInner + single[detID];
+        if (single[detID] > 0)
         {
           nhit++;
           Innernhit++;
-          tsInner = ts[ChannelID + (ModuleID) * 16];
+          tsInner = ts[detID];
         }
         if (ChannelID < 8)
         {
-          singleInnerFront[ChannelID] = single[ChannelID + ModuleID * 16];
-          sumInnerFront = sumInnerFront + single[ChannelID + ModuleID * 16];
+          singleInnerFront[ChannelID] = single[detID];
+          sumInnerFront = sumInnerFront + single[detID];
         }
         if (ChannelID >= 8 && ChannelID < 16)
         {
-          singleInnerBack[ChannelID - 8] = single[ChannelID + ModuleID * 16];
-          sumInnerBack = sumInnerBack + single[ChannelID + ModuleID * 16];
+          singleInnerBack[ChannelID - 8] = single[detID];
+          sumInnerBack = sumInnerBack + single[detID];
         }
       }
 
       if (E_row > Ecut && ModuleID == 1)
       {
         nhit++;
-        tsOuter = ts[ChannelID + (ModuleID) * 16];
-        raw[ChannelID + ModuleID * 16] = E_row;
-        single[ChannelID + ModuleID * 16] =
-            E_row * Slope_E[ModuleID][ChannelID];
-        single[ChannelID + ModuleID * 16] =
-            single[ChannelID + ModuleID * 16] * single[ChannelID + ModuleID * 16] * alpha[0] + single[ChannelID + ModuleID * 16] * alpha[1] + alpha[2];
-        sum = sum + single[ChannelID + ModuleID * 16];
-        singleOuter[ChannelID + (ModuleID - 1) * 16] = single[ChannelID + ModuleID * 16];
-        sumOuter = sumOuter + single[ChannelID + ModuleID * 16];
+        tsOuter = ts[detID];
+        raw[detID] = E_row;
+        single[detID] = CalibratedEnergy(E_row, Cal_E[detID]);
+        sum = sum + single[detID];
+        singleOuter[ChannelID + (ModuleID - 1) * 16] = single[detID];
+        sumOuter = sumOuter + single[detID];
       }
 
       if (E_row > Ecut && ModuleID == 2)
       {
         nhit++;
-        tsOuter = ts[ChannelID + (ModuleID) * 16];
-        raw[ChannelID + ModuleID * 16] = E_row;
-        single[ChannelID + ModuleID * 16] =
-            E_row * Slope_E[ModuleID][ChannelID];
-        single[ChannelID + ModuleID * 16] =
-            single[ChannelID + ModuleID * 16] * single[ChannelID + ModuleID * 16] * alpha[0] + single[ChannelID + ModuleID * 16] * alpha[1] + alpha[2];
-        sum = sum + single[ChannelID + ModuleID * 16];
-        singleOuter[ChannelID + (ModuleID - 1) * 16] = single[ChannelID + ModuleID * 16];
-        sumOuter = sumOuter + single[ChannelID + ModuleID * 16];
+        tsOuter = ts[detID];
+        raw[detID] = E_row;
+        single[detID] = CalibratedEnergy(E_row, Cal_E[detID]);
+        sum = sum + single[detID];
+        singleOuter[ChannelID + (ModuleID - 1) * 16] = single[detID];
+        sumOuter = sumOuter + single[detID];
       }
 
       pileup = ((MyXIAData *)(*XIA_data)[j])->finish_code;

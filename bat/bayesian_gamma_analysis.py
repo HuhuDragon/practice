@@ -110,9 +110,9 @@ def summarize(chain: list[list[float]]):
 def main() -> None:
     p = argparse.ArgumentParser(description="Read spectra files and run Bayesian analysis")
     # 可改：模板谱文件路径
-    p.add_argument("--templates-csv", type=str, default="bat/data/templates.csv")
+    p.add_argument("--templates-csv", type=str, default="data/templates.csv")
     # 可改：测量谱文件路径
-    p.add_argument("--measured-csv", type=str, default="bat/data/measured.csv")
+    p.add_argument("--measured-csv", type=str, default="data/measured.csv")
     # 可改：MCMC步数（增大更稳定但更慢）
     p.add_argument("--steps", type=int, default=4000)
     # 可改：烧入长度
@@ -124,7 +124,7 @@ def main() -> None:
     # 可改：随机种子
     p.add_argument("--seed", type=int, default=44)
     # 可改：输出目录
-    p.add_argument("--out-dir", type=str, default="bat/output")
+    p.add_argument("--out-dir", type=str, default="output")
     args = p.parse_args()
 
     if args.burn_in >= args.steps:

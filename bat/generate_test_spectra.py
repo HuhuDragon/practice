@@ -99,7 +99,7 @@ def main() -> None:
     # 可改：随机种子，便于复现
     p.add_argument("--seed", type=int, default=42)
     # 可改：输出目录
-    p.add_argument("--out-dir", type=str, default="bat/data")
+    p.add_argument("--out-dir", type=str, default="data")
     args = p.parse_args()
 
     if args.n_spectra < 2:
